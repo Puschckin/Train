@@ -1,38 +1,43 @@
 import java.util.Scanner;
 
 public class Main {
-    public static final String GET_LIST = "1.List";
-    public static final String GET_SET = "2.Set";
-    public static final String GET_DEQUE = "3.Deque";
-    public static final String GET_MAP = "4.Map";
-
     private final ListUiHandler listUiHandler = new ListUiHandler();
+    private final SetUiHandler setUiHandler = new SetUiHandler();
+    private final DequeUiHandler dequeUiHandler = new DequeUiHandler();
+    private final MapUiHandler mapUiHandler = new MapUiHandler();
+    private final Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
         new Main().call();
-
     }
 
-    public void showMenu() {
-        System.out.println("Выберите тип коллекции");
-        System.out.println(GET_LIST);
-        System.out.println(GET_SET);
-        System.out.println(GET_DEQUE);
-        System.out.println(GET_MAP);
-    }
-
-    public void call() {
-        Scanner in = new Scanner(System.in);
+    private void call() {
         while (true) {
             showMenu();
-            switch (in.nextInt()) {
-                case 1:
-                    listUiHandler.call();
-
-                default:
-                    return;
-
-            }
+            getHandler().call();
         }
+    }
+
+    private UiHandler getHandler() {
+        switch (in.nextInt()) {
+            case 1:
+                return listUiHandler;
+            case 2:
+                return setUiHandler;
+            case 3:
+                return dequeUiHandler;
+            case 4:
+                return mapUiHandler;
+            default:
+                return new FinalUiHandler();
+        }
+    }
+
+    private void showMenu() {
+        System.out.println("Выберите тип коллекции");
+        System.out.println("1.List");
+        System.out.println("2.Set");
+        System.out.println("3.Deque");
+        System.out.println("4.Map");
     }
 }
