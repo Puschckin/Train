@@ -1,14 +1,16 @@
-public class ArrayList implements List {
+public class ArrayList<T> implements List<T> {
     private static final int NOT_FOUND_INDEX = -1;
-    private Object[] array;
+    private T[] array;
     private int size = 0;
 
+    @SuppressWarnings("unchecked")
     public ArrayList() {
-        array = new Object[10];
+        array = (T[]) new Object[10];
     }
 
+    @SuppressWarnings("unchecked")
     public ArrayList(int initialSize) {
-        array = new Object[initialSize];
+        array =(T[]) new Object[initialSize];
     }
 
     @Override
@@ -22,14 +24,14 @@ public class ArrayList implements List {
     }
 
     @Override
-    public void add(Object item) {
+    public void add(T item) {
         growAsNeeded();
         array[size++] = item;
     }
 
     private void growAsNeeded() {
         if (size == array.length) {
-            Object[] newArray = new Object[(array.length * 3) / 2 + 1];
+            T[] newArray =(T[]) new Object[(array.length * 3) / 2 + 1];
             for (int i = 0; i < size; i++) {
                 newArray[i] = array[i];
             }
@@ -39,7 +41,7 @@ public class ArrayList implements List {
     }
 
     @Override
-    public void add(int index, Object item) {
+    public void add(int index, T item) {
         checkForRange(index);
         growAsNeeded();
         shiftItemsToRight(index);
@@ -54,13 +56,13 @@ public class ArrayList implements List {
     }
 
     @Override
-    public Object get(int index) {
+    public T get(int index) {
         checkForRange(index);
-        return array[index];
+        return (T) array[index];
     }
 
     @Override
-    public int indexOf(Object obj) {
+    public int indexOf(T obj) {
         for (int i = 0; i < size; i++) {
             if (obj.equals(array[i])) {
                 return i;
@@ -70,7 +72,7 @@ public class ArrayList implements List {
     }
 
     @Override
-    public int lastIndexOf(Object obj) {
+    public int lastIndexOf(T obj) {
         for (int i = size - 1; i >= 0; i--) {
             if (obj.equals(array[i])) {
                 return i;
@@ -80,7 +82,7 @@ public class ArrayList implements List {
     }
 
     @Override
-    public void set(int index, Object item) {
+    public void set(int index, T item) {
         checkForRange(index);
         array[index] = item;
     }
@@ -104,7 +106,7 @@ public class ArrayList implements List {
     }
 
     @Override
-    public boolean remove(Object item) {
+    public boolean remove(T item) {
         int index = indexOf(item);
         if (index == NOT_FOUND_INDEX) {
             return false;
